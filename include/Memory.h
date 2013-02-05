@@ -28,13 +28,10 @@ namespace CudaUtils {
             size(size)
         {
         }
-
-        ~Memory() {
-            free();
-        }
-
+        
         Memory(const Memory&) = delete;
         Memory& operator=(const Memory&) = delete;
+        
         Memory(Memory&& other) :
             gpuPtr(other.gpuPtr),
             size(other.size)
@@ -43,35 +40,34 @@ namespace CudaUtils {
             other.size = 0;
         }
 
-        void reallocate(std::size_t newSize)
-        {
+        ~Memory() {
+            free();
+        }
+
+        void reallocate(std::size_t newSize) {
             auto newPtr = allocate(newSize);
             free();
             gpuPtr = newPtr;
             size = newSize;
         }
 
-        void transferTo(MemType* hostPtr) const
-        {
+        void transferTo(MemType* hostPtr) const {
             checkError(
                 cudaMemcpy(hostPtr, gpuPtr, sizeInBytes(), cudaMemcpyDeviceToHost)
             );
         }
 
-        void transferFrom(const MemType* hostPtr)
-        {
+        void transferFrom(const MemType* hostPtr) {
             checkError(
                 cudaMemcpy(gpuPtr, hostPtr, sizeInBytes(), cudaMemcpyHostToDevice)
             );
         }
 
-        const MemType* get() const
-        {
+        const MemType* get() const {
             return gpuPtr;
         }
 
-        MemType* get()
-        {
+        MemType* get() {
             return gpuPtr;
         }
 
