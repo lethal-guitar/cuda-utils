@@ -3,11 +3,11 @@ Cuda Utilities
 
 Some C++ classes to simplify working with the CUDA Runtime API. Requires a C++ 11 compatible compiler.
 
-= Overview =
+# Overview
 
 Currently, this contains the following classes/functions, all in namespace `CudaUtils`:
 
-=== Memory ===
+### Memory
 
 RAII-Wrapper for device memory. Example usage:
 
@@ -27,11 +27,11 @@ deviceData.transferTo(hostData.data());
 float* rawGpuPtr = deviceData.get();
 ```
 
-=== CudaError ===
+### CudaError
 
 A C++ exception wrapper class for CUDA error codes.
 
-=== Error checking functions ===
+### Error checking functions
 
 The header file `ErrorHandling.h` defines the following helper functions to ease error checking:
 
